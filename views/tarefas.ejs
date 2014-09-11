@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <% include head %>
+
+  <body>
+    <% include cabecalho %>
+
+    <main>
+      <h1>Lista de Tarefas</h1>
+      <form method="post" action="/tarefas">
+        <input name="tarefa" type="text">
+        <input type="submit" value="Cadastrar">
+      </form>
+      <ul>
+      <% tarefas.forEach(function(tarefa){ %>
+      <li>
+        <div class="tarefa" data-id-tarefa="<%= tarefa.id %>">
+          <label class="nome-tarefa" for="tarefa-<%= tarefa.id %>">
+            <%= tarefa.nome %>
+          </label>
+
+          <% if (tarefa.realizada) { %>
+            <input id="tarefa-<%= tarefa.id %>" type="checkbox" checked />
+          <% }else{ %>
+            <input id="tarefa-<%= tarefa.id %>" type="checkbox" />
+          <% } %>
+
+        </div>
+      </li>
+      <% }); %>
+      </ul>
+
+    </main>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
