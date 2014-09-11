@@ -2,10 +2,10 @@
 var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
-var mongoose - require(' mongoose');
+var mongoose = require('mongoose');
 
 // Conexão com banco de dados mongodb
-mongoose.connect(' mongodb://localhost/tarefa');
+mongoose.connect('mongodb://localhost/tarefa');
 
 var db = mongoose.connection;
 
@@ -68,6 +68,9 @@ app.get('/', function(req, res){
     });
 });
 
+// Isto sera removido
+tarefas = [];
+
 app.get('/tarefas', function(req, res){
     res.render('tarefas', {
       'tarefas': tarefas
@@ -75,8 +78,17 @@ app.get('/tarefas', function(req, res){
 });
 
 app.post('/tarefas', function(req, res){
-    createTarefa(req.body.tarefa);
-    res.redirect("/tarefas");
+    // createTarefa(req.body.tarefa);
+    var tarefa = new Tarefa({
+      nome: req.body.name
+    })
+    tarefa.save(function(err){
+      if (!err){
+        res.redirect("/tarefas");
+      } else {
+        console.error('Deu erro');
+      }
+    })
 });
 
 app.put('/tarefas/:id', function(req, res){
