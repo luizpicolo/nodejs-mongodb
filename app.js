@@ -2,6 +2,21 @@
 var express = require('express');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
+var mongoose - require(' mongoose');
+
+// Conexão com banco de dados mongodb
+mongoose.connect(' mongodb://localhost/tarefa');
+
+var db = mongoose.connection;
+
+db.once('connected', function(){
+  var TarefaSchema = mongoose.Schema({
+      nome: String,
+      realizada: { type: Boolean, default: false }
+  });
+
+  Tarefa = mongoose.model('Tarefa', TarefaSchema);
+})
 
 /* Requisição do arquivo de msgs */
 var msg = require('./config/msg');
